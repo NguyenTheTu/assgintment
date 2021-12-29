@@ -1,28 +1,27 @@
-package Mini_Project;
+package Project;
 
-import Mini_Project.controller.StudentManager;
-import Mini_Project.dataservices.StudentDataServices;
-import Mini_Project.models.Student;
+import Project.controllers.BookManager;
+import Project.models.Book;
+import Project.services.BookDataService;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 
-public class MainClass {
+public class Main {
+    
 
     public static Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) throws IOException     {
+    public static void main(String[] args) throws IOException {
 
-        //read
-        StudentDataServices service = new StudentDataServices();
+        BookDataService service = new BookDataService();
 
-        List<Student> students = service.read("./resources/students-input.txt");
+        List<Book> books = service.read("./resources/book-input.txt");
 
         String choose = null;
         boolean exit = false;
-        StudentManager studentManager = new StudentManager("./resources/students-input.txt");
+        BookManager bookManager = new BookManager("./resources/book-input.txt");
 
         showMenu();
 
@@ -31,29 +30,51 @@ public class MainClass {
 
             switch (choose) {
                 case "1":
-                    System.out.println("Add student: ");
-                    studentManager.addStudent(scanner);
+                    System.out.println("Add book: ");
+                    bookManager.addBook(scanner);
                     break;
                 case "2":
-                    System.out.println("Edit student: ");
-                    studentManager.editStudent(scanner);
+                    System.out.println("Edit book: ");
+                    bookManager.editBook(scanner);
                     break;
                 case "3":
-                    System.out.println("Delete student: ");
-                    studentManager.deleteStudent(scanner);
+                    System.out.println("Delete book: ");
+                    bookManager.deleteBook(scanner);
                     break;
                 case "4":
-                    System.out.println("Sort students by id ");
-                    studentManager.sortById();
+                    System.out.println("Books");
+                    bookManager.showAll();
                     break;
-                case "5":
-                    System.out.println("Sort students by name ");
-                    studentManager.sortByName();
+                 case "5":
+                     System.out.println("Author:");
+                    String author = scanner.nextLine();
+                    for (Book book : books) {
+            if(book.getAuthor().equalsIgnoreCase(author)) {
+                book.display();
+            }
+        }
                     break;
-                case "6":
-                    System.out.println("Students");
-                    studentManager.showAll();
-                    break;
+                    case "6":
+                     System.out.println("Name:");
+                    String name = scanner.nextLine();
+                    for (Book book : books) {
+            if(book.getName().equalsIgnoreCase(name)) {
+                book.display();
+            }
+        }
+
+                 break;
+                case "7":
+                     System.out.println("Price:");
+                    String price = scanner.nextLine();
+                    for (Book book : books) {
+            if(book.getPrice().equalsIgnoreCase(price)) {
+                book.display();
+            }
+        }
+
+                 break;
+                    
                 case "0":
                     System.out.println("Exit");
                     exit = true;
@@ -61,6 +82,7 @@ public class MainClass {
                 default:
                     System.out.println("Invalid input!");
                     break;
+                
             }
 
             if (exit) {
@@ -71,19 +93,21 @@ public class MainClass {
         }
 
 
-        //write
-
     }
+
     public static void showMenu() {
         System.out.println("-----------------Menu------------------");
-        System.out.println("1. Add student");
-        System.out.println("2. Edit student");
-        System.out.println("3. Delete student");
-        System.out.println("4. Sort students by id");
-        System.out.println("5. Sort students by name");
-        System.out.println("6. Show all students");
+        System.out.println("1. Add book");
+        System.out.println("2. Edit book");
+        System.out.println("3. Delete book");
+        System.out.println("4. Show all books");
+        System.out.println("5. Find by author");
+        System.out.println("6. Find by name");
+        System.out.println("7. Find by price");
         System.out.println("0. Exit");
         System.out.println("---------------------------------------");
         System.out.println("Please choose: ");
     }
+                 
+
 }
